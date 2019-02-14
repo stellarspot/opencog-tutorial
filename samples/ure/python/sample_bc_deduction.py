@@ -1,4 +1,4 @@
-from opencog.ure import ForwardChainer
+from opencog.ure import BackwardChainer
 from opencog.type_constructors import *
 from opencog.utilities import initialize_opencog
 from opencog.atomspace import TruthValue
@@ -25,7 +25,7 @@ BC.tv = TruthValue(0.85, 0.95)
 
 # Run Forward Chainer
 
-chainer = ForwardChainer(atomspace,
+chainer = BackwardChainer(atomspace,
                          deduction_rbs,
                          InheritanceLink(VariableNode("$X"), C),
                          TypedVariableLink(VariableNode("$X"), TypeNode("ConceptNode")))

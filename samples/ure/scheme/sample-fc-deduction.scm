@@ -18,6 +18,6 @@
 
 (display
  (cog-fc
-  fc-deduction-rbs
+  deduction-rbs
   (InheritanceLink (VariableNode "$X") C)
   #:vardecl (TypedVariable (VariableNode "$X") (TypeNode "ConceptNode"))))

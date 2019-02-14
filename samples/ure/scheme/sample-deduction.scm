@@ -11,7 +11,7 @@
 ;; See https://github.com/opencog/atomspace/tree/master/examples/rule-engine for more details.
 ;; -----------------------------------------------------------------------------
 
-(define fc-deduction-rule
+(define deduction-rule
  (BindLink
   (VariableList
    (TypedVariableLink
@@ -36,7 +36,7 @@
      (VariableNode "$A")
      (VariableNode "$C"))))
   (ExecutionOutputLink
-   (GroundedSchemaNode "scm: fc-deduction-formula")
+   (GroundedSchemaNode "scm: deduction-formula")
    (ListLink
     (InheritanceLink
      (VariableNode "$A")
@@ -56,7 +56,7 @@
 ;; set the TV of A->C to (stv 1 1)
 ;; -----------------------------------------------------------------------------
 
-(define (fc-deduction-formula AC AB BC)
+(define (deduction-formula AC AB BC)
  (let (
         (sAB (cog-stv-strength AB))
         (cAB (cog-stv-confidence AB))
@@ -66,33 +66,32 @@
    (cog-set-tv! AC (stv 1 1)))))
 
 ;; Associate a name to the rule
-(define fc-deduction-rule-name
- (DefinedSchemaNode "fc-deduction-rule"))
+(define deduction-rule-name
+ (DefinedSchemaNode "deduction-rule"))
 
 (DefineLink
- fc-deduction-rule-name
- fc-deduction-rule)
+ deduction-rule-name
+ deduction-rule)
 
-
-;;;;;;;;;;;;;;;;
-;; Load rules ;;
-;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Associate rules to PLN ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Define a new rule base (aka rule-based system)
-(define fc-deduction-rbs (ConceptNode "fc-deduction-rule-base"))
+(define deduction-rbs (ConceptNode "deduction-rule-base"))
 (InheritanceLink
- fc-deduction-rbs
+ deduction-rbs
  (ConceptNode "URE"))
 
 ;; Associate the rules to the rule base (with weights, their semantics
 ;; is currently undefined, we might settled with probabilities but it's
 ;; not sure)
-(ure-add-rules fc-deduction-rbs (list fc-deduction-rule-name))
+(ure-add-rules deduction-rbs (list deduction-rule-name))
 
 ;; Termination criteria parameters
-(ure-set-num-parameter fc-deduction-rbs "URE:maximum-iterations" 20)
+(ure-set-num-parameter deduction-rbs "URE:maximum-iterations" 20)
 
 ;; Attention allocation (set the TV strength to 0 to disable it, 1 to
 ;; enable it)
-(ure-set-fuzzy-bool-parameter fc-deduction-rbs "URE:attention-allocation" 0)
+(ure-set-fuzzy-bool-parameter deduction-rbs "URE:attention-allocation" 0)
 
