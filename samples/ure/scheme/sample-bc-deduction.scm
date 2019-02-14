@@ -12,12 +12,12 @@
 (define AB (InheritanceLink (stv 1 1) A B))
 (define BC (InheritanceLink (stv 1 1) B C))
 
-;;;;;;;;;;;;;;;;;;;;;
-;; Forward Chainer ;;
-;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;; Backward Chainer ;;
+;;;;;;;;;;;;;;;;;;;;;;
 
 (display
- (cog-fc
+ (cog-bc
   fc-deduction-rbs
   (InheritanceLink (VariableNode "$X") C)
   #:vardecl (TypedVariable (VariableNode "$X") (TypeNode "ConceptNode"))))
