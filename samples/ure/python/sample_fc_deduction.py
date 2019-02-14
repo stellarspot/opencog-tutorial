@@ -1,5 +1,4 @@
 from opencog.ure import ForwardChainer
-from opencog.scheme_wrapper import scheme_eval
 from opencog.type_constructors import *
 from opencog.utilities import initialize_opencog
 from opencog.atomspace import TruthValue
@@ -86,6 +85,7 @@ def fc_deduction_formula(AC, AB, BC):
 
     return AC
 
+
 # Load rules
 
 fc_deduction_rule_name = DefinedSchemaNode("fc-deduction-rule")
@@ -98,33 +98,19 @@ fc_deduction_rbs = ConceptNode("fc-deduction-rule-base")
 
 InheritanceLink(
     fc_deduction_rbs,
-    ConceptNode("URE")
+    ConceptNode("URE"))
+
+MemberLink(
+    fc_deduction_rule_name,
+    fc_deduction_rbs
 )
-
-execute_code = \
-    '''
-    (use-modules (opencog) (opencog query) (opencog exec) (opencog rule-engine))
-
-    (define fc-deduction-rbs (ConceptNode "fc-deduction-rule-base"))
-
-    (define fc-deduction-rule-name
-        (DefinedSchemaNode "fc-deduction-rule"))
-
-    (ure-add-rules fc-deduction-rbs (list fc-deduction-rule-name))
-
-    (ure-set-num-parameter fc-deduction-rbs "URE:maximum-iterations" 30)
-
-    (ure-set-fuzzy-bool-parameter fc-deduction-rbs "URE:attention-allocation" 0)
-    '''
-
-scheme_eval(atomspace, execute_code)
 
 # Forward Chainer
 
 chainer = ForwardChainer(atomspace,
-                         ConceptNode("fc-deduction-rule-base"),
-                         InheritanceLink(VariableNode("$who"), C),
-                         TypedVariableLink(VariableNode("$who"), TypeNode("ConceptNode")))
+                         fc_deduction_rbs,
+                         InheritanceLink(VariableNode("$X"), C),
+                         TypedVariableLink(VariableNode("$X"), TypeNode("ConceptNode")))
 
 chainer.do_chain()
 results = chainer.get_results()

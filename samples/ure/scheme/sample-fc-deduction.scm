@@ -1,5 +1,15 @@
 (use-modules (opencog) (opencog exec) (opencog rule-engine))
 
+;;;;;;;;;;;;;;;;;;;;
+;; Knowledge Base ;;
+;;;;;;;;;;;;;;;;;;;;
+
+(define A (ConceptNode "A" (stv 1 1)))
+(define B (ConceptNode "B"))
+(define C (ConceptNode "C"))
+(define AB (InheritanceLink (stv 1 1) A B))
+(define BC (InheritanceLink (stv 1 1) B C))
+
 ;; =============================================================================
 ;; Crisp logic entailment (Deduction) Rule.
 ;;
@@ -96,15 +106,6 @@
 ;; enable it)
 (ure-set-fuzzy-bool-parameter fc-deduction-rbs "URE:attention-allocation" 0)
 
-;;;;;;;;;;;;;;;;;;;;
-;; Knowledge Base ;;
-;;;;;;;;;;;;;;;;;;;;
-
-(define A (ConceptNode "A" (stv 1 1)))
-(define B (ConceptNode "B"))
-(define C (ConceptNode "C"))
-(define AB (InheritanceLink (stv 1 1) A B))
-(define BC (InheritanceLink (stv 1 1) B C))
 
 ;;;;;;;;;;;;;;;;;;;;;
 ;; Forward Chainer ;;
