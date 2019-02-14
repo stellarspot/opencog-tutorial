@@ -8,7 +8,7 @@
 ;;   |-
 ;;   A->C
 ;;
-;; See examples/rule-engine/README.md for more details.
+;; See https://github.com/opencog/atomspace/tree/master/examples/rule-engine for more details.
 ;; -----------------------------------------------------------------------------
 
 (define fc-deduction-rule
