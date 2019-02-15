@@ -54,3 +54,26 @@ ConceptNode("ball")
   * [Forward Chainer](samples/ure/python/sample_fc_deduction.py)
   * [Backward Chainer](samples/ure/python/sample_bc_deduction.py)
 
+
+### Forward Chainer
+
+Enable retry exhausted sources.
+Scheme:
+
+```scheme
+;; Define a new rule base (aka rule-based system)
+(define deduction-rbs (ConceptNode "deduction-rule-base"))
+
+(ure-set-fc-retry-exhausted-sources deduction-rbs #t)
+
+```
+Python:
+```python
+
+deduction_rbs = ConceptNode("deduction-rule-base")
+
+EvaluationLink(
+    PredicateNode("URE:FC:retry-exhausted-sources"),
+    deduction_rbs
+).tv = TruthValue(1, 1)
+```

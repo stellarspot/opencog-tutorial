@@ -79,9 +79,6 @@
 
 ;; Define a new rule base (aka rule-based system)
 (define deduction-rbs (ConceptNode "deduction-rule-base"))
-(InheritanceLink
- deduction-rbs
- (ConceptNode "URE"))
 
 ;; Associate the rules to the rule base (with weights, their semantics
 ;; is currently undefined, we might settled with probabilities but it's
