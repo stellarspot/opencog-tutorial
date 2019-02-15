@@ -16,8 +16,9 @@
 ;; Forward Chainer ;;
 ;;;;;;;;;;;;;;;;;;;;;
 
+(define source (Set AB))
+
 (display
  (cog-fc
   deduction-rbs
-  (InheritanceLink (VariableNode "$X") C)
-  #:vardecl (TypedVariable (VariableNode "$X") (TypeNode "ConceptNode"))))
+  source))

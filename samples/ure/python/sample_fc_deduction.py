@@ -25,12 +25,9 @@ BC.tv = TruthValue(0.85, 0.95)
 
 # Run Forward Chainer
 
-chainer = ForwardChainer(atomspace,
-                         deduction_rbs,
-                         InheritanceLink(VariableNode("$X"), C),
-                         TypedVariableLink(VariableNode("$X"), TypeNode("ConceptNode")))
+sources = SetLink(AB)
+chainer = ForwardChainer(atomspace, deduction_rbs, sources)
 
 chainer.do_chain()
 results = chainer.get_results()
-
 print(results)
