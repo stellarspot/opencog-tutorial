@@ -27,12 +27,14 @@ initialize_opencog(atomspace)
 
 ### ConceptNode
 
+Scheme:
 ```scheme
 (Concept "cat")
 (Concept "green")
 (Concept "ball")
 ```
 
+Python:
 ```python
 ConceptNode("cat")
 ConceptNode("green")
@@ -43,6 +45,7 @@ ConceptNode("ball")
 
 ### StringValue
 
+Python:
 ```python
 string_key = ConceptNode("string-key")
 string_node = ConceptNode("String")
@@ -70,8 +73,8 @@ PrtValue allows to store native objects as vales in OpenCog atoms.
 
 Example of storing a matrix as an atom value:
 
+Python:
 ```python
-
 from opencog.atomspace import PtrValue
 import numpy as np
 
@@ -94,7 +97,6 @@ Output:
 [[0 1]
  [1 0]]
 ```
-
 
 
 ## Pattern Matcher
