@@ -39,6 +39,45 @@ ConceptNode("green")
 ConceptNode("ball")
 ```
 
+## Values
+
+### StringValue
+
+### FloatValue
+
+### PtrValue
+
+PrtValue allows to store native objects as vales in OpenCog atoms.
+
+Example of storing a matrix as an atom value:
+
+```python
+
+from opencog.atomspace import PtrValue
+import numpy as np
+
+# Matrix
+# (0, 1)
+# (1, 0)
+matrix = np.array([0, 1, 1, 0]).reshape([2, 2])
+
+matrix_key = ConceptNode("matrix-ket")
+matrix_node = ConceptNode("Matrix")
+matrix_node.set_value(matrix_key, PtrValue(matrix))
+
+matrix_value = matrix_node.get_value(matrix_key)
+
+print(matrix_value.value())
+```
+
+Output:
+```text
+[[0 1]
+ [1 0]]
+```
+
+
+
 ## Pattern Matcher
 
 ## URE
