@@ -16,6 +16,7 @@
 ```python
 from opencog.type_constructors import *
 from opencog.utilities import initialize_opencog
+from opencog.bindlink import execute_atom
 from opencog.atomspace import TruthValue
 
 # Initialize AtomSpace
@@ -100,6 +101,37 @@ Output:
 
 
 ## Pattern Matcher
+
+
+### GetLink
+
+Find all red balls sample.
+
+Python:
+```python
+red = ConceptNode("red")
+green = ConceptNode("green")
+
+InheritanceLink(ConceptNode("ball1"), red)
+InheritanceLink(ConceptNode("ball2"), green)
+InheritanceLink(ConceptNode("ball3"), red)
+InheritanceLink(ConceptNode("ball4"), green)
+
+red_balls_rule = GetLink(
+    InheritanceLink(
+        VariableNode("$BALL"),
+        red))
+
+res = execute_atom(atomspace, red_balls_rule)
+print(res)
+```
+
+```text
+(SetLink
+  (ConceptNode "ball1")
+  (ConceptNode "ball3")
+)
+```
 
 ## URE
 
