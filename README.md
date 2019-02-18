@@ -43,6 +43,25 @@ ConceptNode("ball")
 
 ### StringValue
 
+```python
+string_key = ConceptNode("string-key")
+string_node = ConceptNode("String")
+string_node.set_value(string_key, StringValue("Hello, World!"))
+
+string_value = string_node.get_value(string_key)
+print(string_value.to_list())
+
+string_node.set_value(string_key, StringValue(["Hello", "Opencog!"]))
+string_value = string_node.get_value(string_key)
+print(string_value.to_list())
+```
+Output:
+```text
+['Hello, World!']
+['Hello', 'Opencog!']
+```
+
+
 ### FloatValue
 
 ### PtrValue
