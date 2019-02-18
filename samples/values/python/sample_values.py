@@ -25,7 +25,7 @@ import numpy as np
 # Matrix
 # (0, 1)
 # (1, 0)
-matrix = np.array([0, 1, 1, 0]).reshape([2, 2])
+matrix = np.matrix([[0, 1], [1, 0]])
 
 matrix_key = ConceptNode("matrix-key")
 matrix_node = ConceptNode("Matrix")
