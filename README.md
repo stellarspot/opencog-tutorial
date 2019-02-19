@@ -142,15 +142,11 @@ Python:
     DefinedSchemaNode('add'),
     LambdaLink(
         VariableList(
-            TypedVariableLink(
-                VariableNode('$A'),
-                TypeNode('NumberNode')),
-            TypedVariableLink(
-                VariableNode('$B'),
-                TypeNode('NumberNode'))),
+            VariableNode('$X'),
+            VariableNode('$Y')),
         PlusLink(
-            VariableNode('$A'),
-            VariableNode('$B')))))
+            VariableNode('$X'),
+            VariableNode('$Y')))))
 
 res = execute_atom(atomspace,
                    ExecutionOutputLink(
