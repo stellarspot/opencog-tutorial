@@ -20,6 +20,6 @@ res = execute_atom(atomspace,
                    ExecutionOutputLink(
                        DefinedSchemaNode('add'),
                        ListLink(
-                           NumberNode("3"),
-                           NumberNode("4"))))
+                           NumberNode('3'),
+                           NumberNode('4'))))
 print(res)
