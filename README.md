@@ -56,6 +56,60 @@ NumberNode("4")
 ```
 ## Values
 
+### StringValue
+
+Python:
+```python
+string_key = ConceptNode("string-key")
+string_node = ConceptNode("String")
+string_node.set_value(string_key, StringValue("Hello, World!"))
+
+string_value = string_node.get_value(string_key)
+print(string_value.to_list())
+
+string_node.set_value(string_key, StringValue(["Hello", "Opencog!"]))
+string_value = string_node.get_value(string_key)
+print(string_value.to_list())
+```
+Output:
+```text
+['Hello, World!']
+['Hello', 'Opencog!']
+```
+
+### FloatValue
+
+### PtrValue
+
+PrtValue allows to store native objects as vales in OpenCog atoms.
+
+Example of storing a matrix as an atom value:
+
+Python:
+```python
+from opencog.atomspace import PtrValue
+import numpy as np
+
+# Matrix
+# (0, 1)
+# (1, 0)
+matrix = np.matrix([[0, 1], [1, 0]])
+
+matrix_key = ConceptNode("matrix-ket")
+matrix_node = ConceptNode("Matrix")
+matrix_node.set_value(matrix_key, PtrValue(matrix))
+
+matrix_value = matrix_node.get_value(matrix_key)
+
+print(matrix_value.value())
+```
+
+Output:
+```text
+[[0 1]
+ [1 0]]
+```
+
 ## Links
 
 ### LambdaLink
@@ -117,62 +171,6 @@ Output:
   )
 )
 ```
-
-### StringValue
-
-Python:
-```python
-string_key = ConceptNode("string-key")
-string_node = ConceptNode("String")
-string_node.set_value(string_key, StringValue("Hello, World!"))
-
-string_value = string_node.get_value(string_key)
-print(string_value.to_list())
-
-string_node.set_value(string_key, StringValue(["Hello", "Opencog!"]))
-string_value = string_node.get_value(string_key)
-print(string_value.to_list())
-```
-Output:
-```text
-['Hello, World!']
-['Hello', 'Opencog!']
-```
-
-
-### FloatValue
-
-### PtrValue
-
-PrtValue allows to store native objects as vales in OpenCog atoms.
-
-Example of storing a matrix as an atom value:
-
-Python:
-```python
-from opencog.atomspace import PtrValue
-import numpy as np
-
-# Matrix
-# (0, 1)
-# (1, 0)
-matrix = np.matrix([[0, 1], [1, 0]])
-
-matrix_key = ConceptNode("matrix-ket")
-matrix_node = ConceptNode("Matrix")
-matrix_node.set_value(matrix_key, PtrValue(matrix))
-
-matrix_value = matrix_node.get_value(matrix_key)
-
-print(matrix_value.value())
-```
-
-Output:
-```text
-[[0 1]
- [1 0]]
-```
-
 
 ## Pattern Matcher
 
