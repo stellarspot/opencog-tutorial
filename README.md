@@ -44,7 +44,16 @@ ConceptNode("ball")
 
 ### NumberNode
 
+Scheme:
+```scheme
+(Number 3)
+(Number 4)
+```
 
+```python
+NumberNode("3")
+NumberNode("4")
+```
 ## Values
 
 ## Links
