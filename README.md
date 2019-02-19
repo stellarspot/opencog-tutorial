@@ -7,7 +7,7 @@
 
 ```scheme
 ; import opencog libraries
-(use-modules (opencog))
+(use-modules (opencog) (opencog exec))
 
 ```
 
@@ -42,7 +42,72 @@ ConceptNode("green")
 ConceptNode("ball")
 ```
 
+### NumberNode
+
+
 ## Values
+
+## Links
+
+### LambdaLink
+
+Scheme:
+```scheme
+(Define
+ (DefinedSchema "add")
+ (Lambda
+  (VariableList
+   (Variable "$X")
+   (Variable "$Y"))
+  (Plus
+   (Variable "$X")
+   (Variable "$Y"))))
+
+(display
+ (cog-execute!
+  (ExecutionOutput
+   (DefinedSchema "add")
+   (List
+    (Number "2")
+    (Number "3")))))
+```
+Output: ```(NumberNode "5.000000")```
+
+Python:
+```python
+(DefineLink(
+    DefinedSchemaNode('add'),
+    LambdaLink(
+        VariableList(
+            TypedVariableLink(
+                VariableNode('$A'),
+                TypeNode('NumberNode')),
+            TypedVariableLink(
+                VariableNode('$B'),
+                TypeNode('NumberNode'))),
+        PlusLink(
+            VariableNode('$A'),
+            VariableNode('$B')))))
+
+res = execute_atom(atomspace,
+                   ExecutionOutputLink(
+                       DefinedSchemaNode('add'),
+                       ListLink(
+                           NumberNode("3"),
+                           NumberNode("4"))))
+print(res)
+```
+
+Output:
+```scheme
+(ExecutionOutputLink
+  (DefinedSchemaNode "add")
+  (ListLink
+    (NumberNode "3.000000")
+    (NumberNode "4.000000")
+  )
+)
+```
 
 ### StringValue
 
@@ -125,8 +190,8 @@ red_balls_rule = GetLink(
 res = execute_atom(atomspace, red_balls_rule)
 print(res)
 ```
-
-```text
+Output:
+```scheme
 (SetLink
   (ConceptNode "ball1")
   (ConceptNode "ball3")

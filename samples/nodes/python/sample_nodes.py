@@ -9,3 +9,6 @@ initialize_opencog(atomspace)
 ConceptNode("cat")
 ConceptNode("green")
 ConceptNode("ball")
+
+NumberNode("3")
+NumberNode("4")
