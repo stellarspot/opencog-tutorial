@@ -112,6 +112,24 @@ Output:
 
 ## Links
 
+### ArityLink
+
+Python:
+```python
+arity_link = ArityLink(
+    ListLink(
+        ConceptNode("apple"),
+        ConceptNode("orange"),
+        ConceptNode("pear")))
+
+res = execute_atom(atomspace, arity_link)
+print(res)
+```
+Output:
+```scheme
+(NumberNode "3.000000")
+```
+
 ### LambdaLink
 
 Scheme:
@@ -170,7 +188,6 @@ Output:
 
 ## Pattern Matcher
 
-
 ### GetLink
 
 Find all red balls sample.
@@ -198,6 +215,26 @@ Output:
 (SetLink
   (ConceptNode "ball1")
   (ConceptNode "ball3")
+)
+```
+
+### PutLink
+
+Python:
+```python
+put_link = PutLink(
+    InheritanceLink(ConceptNode("ball"), VariableNode("$COLOR")),
+    ConceptNode("orange")
+)
+
+res = execute_atom(atomspace, put_link)
+print(res)
+```
+Output:
+```scheme
+(InheritanceLink
+  (ConceptNode "ball")
+  (ConceptNode "orange")
 )
 ```
 
