@@ -186,6 +186,40 @@ Output:
 )
 ```
 
+### ValueOfLink
+
+Scheme:
+```scheme
+(define key (Predicate "key"))
+(define atom (Concept "atom"))
+(cog-set-value! atom key (FloatValue 3))
+
+(display
+ (cog-execute! (ValueOf atom key))
+)
+```
+Output:
+```scheme
+(FloatValue 3)
+```
+
+Python:
+```python
+key = PredicateNode("key")
+atom = ConceptNode("atom")
+atom.set_value(key, FloatValue(3))
+
+value_of_link = ValueOfLink(atom, key)
+
+res = execute_atom(atomspace, value_of_link)
+print(res)
+```
+
+Output:
+```scheme
+(FloatValue 3)
+```
+
 ## Pattern Matcher
 
 ### GetLink
