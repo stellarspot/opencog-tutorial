@@ -186,6 +186,31 @@ Output:
 )
 ```
 
+### ExecutionOutputLink
+
+Python:
+```python
+def pow(node_a, node_b):
+    a = int(float(node_a.name))
+    b = int(float(node_b.name))
+    return NumberNode(str(a ** b))
+
+
+execution_output_link = ExecutionOutputLink(
+    GroundedSchemaNode("py: pow"),
+    ListLink(
+        NumberNode("2"),
+        NumberNode("5")
+    ))
+
+res = execute_atom(atomspace, execution_output_link)
+print(res)
+```
+Output:
+```scheme
+(NumberNode "32.000000")
+```
+
 ### ValueOfLink
 
 Scheme:
