@@ -9,7 +9,9 @@
 
 ; Ghost methods
 
-(define-public (call_animal animal) (List (Word (cog-name animal)) (Word (cog-name animal)) (Word (cog-name animal))))
+(define-public
+ (call_animal animal)
+ (List animal animal animal))
 
 ; Ghost Rules
 (ghost-parse "
@@ -29,7 +31,7 @@ r: (Do you ~attitude _~bird) $animal=_0 I am a fun of $animal!
 
 r: (Do you ~attitude _~reptile) $animal=_0 I am afraid of $animal!
 
-r: (what is amusing _~animal) $animal=_0 Just call it $animal - ^call_animal($animal)!
+r: (what is amusing _~animal) $animal=_0 Just call it ^call_animal($animal)!
 
 ")
 
