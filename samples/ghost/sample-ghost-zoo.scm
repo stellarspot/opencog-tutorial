@@ -7,9 +7,7 @@
 
  ; Python bindings
  (opencog exec)
- (opencog python)
-
-)
+ (opencog python))
 
 ; Python methods
 
