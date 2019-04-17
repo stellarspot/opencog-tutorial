@@ -37,15 +37,6 @@ def get_legs(animal):
  (call_animal animal)
  (List animal animal animal))
 
-(define-public
- (how_many_legs animal)
- (define legs
-  (cog-execute!
-   (ExecutionOutputLink
-    (GroundedSchemaNode "py: get_legs")
-    (ListLink animal))))
- (List legs))
-
 ; Ghost Rules
 (ghost-parse "
 concept: ~bird [flamingo swan]
@@ -64,21 +55,34 @@ r: (do you ~attitude _~bird) $animal='_0 I am a fun of $animal!
 
 r: (do you ~attitude _~reptile) $animal='_0 I am afraid of $animal!
 
-r: (what is amusing _~animal) $animal='_0 Just call it ^call_animal($animal)!
+r: (what is amusing _~animal)
+    $animal='_0
+    Just call it ^call_animal($animal)! # Call Scheme method
 
 r: (legs does _~animal have)
     $animal='_0
-    $animal has ^how_many_legs($animal) legs
+    $animal has ^py_get_legs($animal) legs # Call Python method using 'py_' prefix.
 ")
 
 ; Test Ghost
 (test-ghost "Hello")
+;[Ghost] (Welcome to the Zoo ! Which animals do you want to see ?)
 (test-ghost "I want to see flamingo")
+;[Ghost]  (Birds are so beautiful. Let's go to see them !)
 
 (test-ghost "Hi")
+;[Ghost] (Welcome to the Zoo ! Which animals do you want to see ?)
 (test-ghost "I want to see turtle")
+;[Ghost] (Good choice. Let's go to see reptiles !)
 
 (test-ghost "Do you like swans?")
+;[Ghost] (I am a fun of swans !)
+
 (test-ghost "Do you hate snakes?")
+;[Ghost] (I am afraid of snakes !)
+
 (test-ghost "What is amusing elephant!")
+;[Ghost] (Just call it elephant elephant elephant !)
+
 (test-ghost "How many legs does lion have?")
+;[Ghost] (lion has 4 legs)
