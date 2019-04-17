@@ -11,6 +11,11 @@
 
 ```
 
+Print all atoms in the atomspace:
+```scheme
+(cog-prt-atomspace)
+```
+
 ### Python
 
 ```python
@@ -22,6 +27,13 @@ from opencog.atomspace import TruthValue
 # Initialize AtomSpace
 atomspace = AtomSpace()
 initialize_opencog(atomspace)
+```
+
+Print all atoms in the atomspace:
+```python
+for atom in atomspace:
+    if not atom.incoming:
+        print(str(atom))
 ```
 
 ## Nodes
