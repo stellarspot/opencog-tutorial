@@ -393,11 +393,11 @@ Output:
 
 ### PLN:
 ```scheme
+(nlp-parse "Dogs can bark.")
+(nlp-parse "Tobby is a dog.")
+
+; Load rule-base for the trail of inference
 (load-trail-3)
-
-(nlp-parse "dogs can bark")
-(nlp-parse "Tobby is a dog")
-
 (do_pln)
 
 ; Utility for testing as sureal part is broken
