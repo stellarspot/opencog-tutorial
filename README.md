@@ -346,6 +346,80 @@ EvaluationLink(
 ).tv = TruthValue(1, 1)
 ```
 
+## Natural Language Processing
+
+Parse sentence:
+```scheme
+(nlp-parse "I like cats.")
+```
+
+### Surface Realization (SuReal)
+
+Create sentence:
+```scheme
+(nlp-parse "He eats.")
+(nlp-parse "She eats quickly.")
+(nlp-parse "Nobody drank it.")
+(nlp-parse "It drinks water.")
+
+(display
+ (sureal
+  (SetLink
+   (EvaluationLink
+    (PredicateNode "drink")
+    (ListLink (ConceptNode "she"))))))
+
+(newline)
+
+(display
+ (sureal
+  (SetLink
+   (EvaluationLink
+    (PredicateNode "drink")
+    (ListLink (ConceptNode "she")))
+   (InheritanceLink
+    (PredicateNode "drink")
+    (DefinedLinguisticConceptNode "past")))))
+
+(newline)
+```
+
+Output:
+```scheme
+((she drinks .))
+((she drank it .))
+```
+
+
+### PLN:
+```scheme
+(load-trail-3)
+
+(nlp-parse "dogs can bark")
+(nlp-parse "Tobby is a dog")
+
+(do_pln)
+
+; Utility for testing as sureal part is broken
+(define (get-atoms-for-sureal trail)
+ (define pln-outputs (cog-value->list
+                      (cog-value trail (Predicate "inference-results"))))
+ (if (null? pln-outputs) '() (cog-outgoing-set (filter-for-sureal pln-outputs))))
+
+
+(display
+ (get-atoms-for-sureal rb-trail-3))
+```
+
+Output:
+```scheme
+((EvaluationLink
+   (PredicateNode "bark" (stv 9.7e-13 0.001))
+   (ListLink (etv 1 0)
+      (ConceptNode "Tobby" (stv 9.7e-13 0.001))
+   )
+)
+```
 
 ## Scheme Python Interoperability
 

@@ -24,4 +24,3 @@
 
 (display
  (get-atoms-for-sureal rb-trail-3))
-
