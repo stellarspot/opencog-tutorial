@@ -261,7 +261,28 @@ Output:
 
 ### GetLink
 
-Find all red balls sample.
+Find all red balls.
+
+Scheme:
+```scheme
+(define red (Concept "red"))
+(define green (Concept "green"))
+
+(Inheritance (ConceptNode "ball1") red)
+(Inheritance (ConceptNode "ball2") green)
+(Inheritance (ConceptNode "ball3") red)
+(Inheritance (ConceptNode "ball4") green)
+
+
+(define red-balls-rule
+ (Get
+  (Inheritance
+   (Variable "$BALL")
+   red)))
+
+(display
+ (cog-execute! red-balls-rule))
+```
 
 Python:
 ```python
@@ -306,6 +327,64 @@ Output:
 (InheritanceLink
   (ConceptNode "ball")
   (ConceptNode "orange")
+)
+```
+
+### BindLink
+
+Put red balls to the basket1 and green balls to the basket2
+
+Scheme:
+```scheme
+(define red (Concept "red"))
+(define green (Concept "green"))
+
+(Inheritance (ConceptNode "ball1") red)
+(Inheritance (ConceptNode "ball2") green)
+(Inheritance (ConceptNode "ball3") red)
+
+(define basket1 (Concept "basket1"))
+(define basket2 (Concept "basket2"))
+
+
+(define (put-balls-to-basket basket color)
+ (Bind
+  (VariableList
+   (TypedVariable
+    (Variable "$BALL")
+    (Type "ConceptNode")))
+  (Inheritance
+   (Variable "$BALL")
+   color)
+  (Member
+   (Variable "$BALL")
+   basket)))
+
+(display
+ (cog-execute! (put-balls-to-basket basket1 red)))
+
+(display
+ (cog-execute! (put-balls-to-basket basket2 green)))
+```
+
+Output:
+```scheme
+
+(SetLink
+   (MemberLink
+      (ConceptNode "ball1")
+      (ConceptNode "basket1")
+   )
+   (MemberLink
+      (ConceptNode "ball3")
+      (ConceptNode "basket1")
+   )
+)
+(SetLink
+   (MemberLink
+      (ConceptNode "ball2")
+      (ConceptNode "basket2")
+   )
 )
 ```
 
