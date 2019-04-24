@@ -55,11 +55,67 @@
     (Variable "$who")
     (Variable "$where")))))
 
+(define colegue-rule
+ (Bind
+  (VariableList
+   ; colegue
+   (TypedVariable
+    (Variable "$colegue_inst")
+    (Type "ConceptNode"))
+   ; who
+   (TypedVariable
+    (Variable "$who_inst")
+    (Type "ConceptNode"))
+   (TypedVariable
+    (Variable "$who")
+    (Type "ConceptNode"))
+   (TypedVariable
+    (Variable "$who_specific")
+    (Type "SpecificEntityNode"))
+   ; whom
+   (TypedVariable
+    (Variable "$whom_inst")
+    (Type "ConceptNode"))
+   (TypedVariable
+    (Variable "$whom")
+    (Type "ConceptNode")))
+  (And
+   (InheritanceLink
+    (Variable "$colegue_inst")
+    (ConceptNode "colegue"))
+   (InheritanceLink
+    (Variable "$who_inst")
+    (Variable "$who"))
+   (InheritanceLink
+    (Variable "$whom_inst")
+    (Variable "$whom"))
+   ; restrict parents of who in InheritanceLink
+   ; only to SpecificEntityNode
+   (InheritanceLink
+    (Variable "$who_specific")
+    (Variable "$who"))
+   (InheritanceLink
+    (Variable "$who_inst")
+    (Variable "$colegue_inst"))
+   (EvaluationLink
+    (DefinedLinguisticPredicateNode "possession")
+    (ListLink
+     (Variable "$colegue_inst")
+     (Variable "$whom_inst"))))
+  (Evaluation
+   (Predicate "colegue")
+   (List
+    (Variable "$who")
+    (Variable "$whom")))))
+
 
 (nlp-parse "I work in SoftMegaCorp.")
-;(nlp-parse "Bob is my colegue.")
+(nlp-parse "Bob is my colegue.")
 
 ;(cog-prt-atomspace)
 
 (display
  (cog-execute! work-rule))
+
+(display
+ (cog-execute! colegue-rule))
