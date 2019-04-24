@@ -85,6 +85,28 @@
  (cog-execute! parse-facts-work-rule)
  (List))
 
+(define-public (where-somebody-work who-list)
+ (define who (get-first-element-from-set who-list))
+ ; Workaround for passed i instead of I
+ (define who-name (if (equal? (cog-name who) "i") "I" (cog-name who)))
+ (define where-set
+  (cog-execute!
+   (Get
+    (Evaluation
+     (Predicate "work")
+     (ListLink
+      (Concept who-name)
+      (Variable "$where"))))))
+ (Word (cog-name (get-first-element-from-set where-set))))
+
+(define (get-first-element-from-set set)
+ (define outgoing-set (cog-outgoing-set set))
+ (if (null? outgoing-set)
+  (Concept "Unknown")
+  (car outgoing-set)))
+
+(ghost-set-refractory-period .001)
+
 ;; Ghost Rules
 (ghost-parse "
 
@@ -95,7 +117,7 @@ r: (I work in _*)
   ^parse-facts()
   ^keep()
 
-r: (where do _* work) Just try to find where '_0 work.
+r: (where do _* work) '_0 work in ^where-somebody-work('_0).
   ^keep()
 ")
 
