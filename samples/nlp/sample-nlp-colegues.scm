@@ -10,9 +10,6 @@
   (VariableList
    (TypedVariable
     (Variable "$verb_inst")
-    (Type "WordInstanceNode"))
-   (TypedVariable
-    (Variable "$verb_pred")
     (Type "PredicateNode"))
    (TypedVariable
     (Variable "$who_concept_inst")
@@ -21,17 +18,14 @@
     (Variable "$who_concept")
     (Type "ConceptNode")))
   (And
-   (ReferenceLink
+   (ImplicationLink
     (Variable "$verb_inst")
-    (WordNode "work"))
-   (ReferenceLink
-    (Variable "$verb_pred")
-    (Variable "$verb_inst"))
+    (PredicateNode "work"))
    (InheritanceLink
     (Variable "$who_concept_inst")
     (Variable "$who_concept"))
    (EvaluationLink
-    (Variable "$verb_pred")
+    (Variable "$verb_inst")
     (ListLink
      (Variable "$who_concept_inst"))))
   (Evaluation
