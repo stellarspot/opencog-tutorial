@@ -12,26 +12,26 @@
     (Variable "$verb_inst")
     (Type "PredicateNode"))
    (TypedVariable
-    (Variable "$who_concept_inst")
+    (Variable "$who_inst")
     (Type "ConceptNode"))
    (TypedVariable
-    (Variable "$who_concept")
+    (Variable "$who")
     (Type "ConceptNode")))
   (And
    (ImplicationLink
     (Variable "$verb_inst")
     (PredicateNode "work"))
    (InheritanceLink
-    (Variable "$who_concept_inst")
-    (Variable "$who_concept"))
+    (Variable "$who_inst")
+    (Variable "$who"))
    (EvaluationLink
     (Variable "$verb_inst")
     (ListLink
-     (Variable "$who_concept_inst"))))
+     (Variable "$who_inst"))))
   (Evaluation
    (Predicate "work")
    (List
-    (Variable "$who_concept")))))
+    (Variable "$who")))))
 
 
 (nlp-parse "I work in SoftMegaCorp.")
