@@ -88,7 +88,8 @@
 (define-public (where-somebody-work who-list)
  (define who (get-first-element-from-set who-list))
  ; Workaround for passed i instead of I
- (define who-name (if (equal? (cog-name who) "i") "I" (cog-name who)))
+ ; and alice instead of Alice
+ (define who-name (string-upcase (cog-name who) 0 1))
  (define where-set
   (cog-execute!
    (Get
@@ -112,17 +113,20 @@
 
 p: This is your personal Notebook assistant
 
-r: (I work in _*)
+r: (* [work works] in _*)
   '_0 is a great company!
   ^parse-facts()
   ^keep()
 
-r: (where do _* work) '_0 work in ^where-somebody-work('_0).
+r: (where [do does] _* work) '_0 work in ^where-somebody-work('_0) company.
   ^keep()
 ")
 
 ; Test Ghost
 (test-ghost "I work in SoftMegaCorp.")
 (test-ghost "Where do I work?")
+
+(test-ghost "Alice works in HardMegaCorp.")
+(test-ghost "Where does Alice work?")
 
 ;(cog-prt-atomspace)
