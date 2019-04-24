@@ -109,8 +109,22 @@
     (Variable "$whom")))))
 
 
+(define (where-somebody-work who)
+ (define where-set
+  (cog-execute!
+   (Get
+    (Evaluation
+     (Predicate "work")
+     (ListLink
+      (Concept (cog-name who))
+      (Variable "$where"))))))
+ (define where (car (cog-outgoing-set where-set)))
+ (Word (cog-name where)))
+
+
 (nlp-parse "I work in SoftMegaCorp.")
 (nlp-parse "Bob is my colegue.")
+(nlp-parse "Alice works in HardMegaCorp.")
 
 ;(cog-prt-atomspace)
 
@@ -119,3 +133,9 @@
 
 (display
  (cog-execute! colegue-rule))
+
+(display
+ (where-somebody-work (Word "I")))
+
+(display
+ (where-somebody-work (Word "Alice")))
