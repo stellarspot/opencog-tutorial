@@ -55,12 +55,12 @@
     (Variable "$who")
     (Variable "$where")))))
 
-(define colegue-rule
+(define colleague-rule
  (Bind
   (VariableList
-   ; colegue
+   ; colleague
    (TypedVariable
-    (Variable "$colegue_inst")
+    (Variable "$colleague_inst")
     (Type "ConceptNode"))
    ; who
    (TypedVariable
@@ -81,8 +81,8 @@
     (Type "ConceptNode")))
   (And
    (InheritanceLink
-    (Variable "$colegue_inst")
-    (ConceptNode "colegue"))
+    (Variable "$colleague_inst")
+    (ConceptNode "colleague"))
    (InheritanceLink
     (Variable "$who_inst")
     (Variable "$who"))
@@ -96,14 +96,14 @@
     (Variable "$who"))
    (InheritanceLink
     (Variable "$who_inst")
-    (Variable "$colegue_inst"))
+    (Variable "$colleague_inst"))
    (EvaluationLink
     (DefinedLinguisticPredicateNode "possession")
     (ListLink
-     (Variable "$colegue_inst")
+     (Variable "$colleague_inst")
      (Variable "$whom_inst"))))
   (Evaluation
-   (Predicate "colegue")
+   (Predicate "colleague")
    (List
     (Variable "$who")
     (Variable "$whom")))))
@@ -123,7 +123,7 @@
 
 
 (nlp-parse "I work in SoftMegaCorp.")
-(nlp-parse "Bob is my colegue.")
+(nlp-parse "Bob is my colleague.")
 (nlp-parse "Alice works in HardMegaCorp.")
 
 ;(cog-prt-atomspace)
@@ -132,7 +132,7 @@
  (cog-execute! work-rule))
 
 (display
- (cog-execute! colegue-rule))
+ (cog-execute! colleague-rule))
 
 (display
  (where-somebody-work (Word "I")))

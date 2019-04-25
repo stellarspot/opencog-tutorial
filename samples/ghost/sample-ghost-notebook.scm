@@ -21,7 +21,7 @@
 ; Legend 3:
 ; I work in SoftMegaCorp.
 ; Alice works in HardMegaCorp.
-; Bob is my colegue.
+; Bob is my colleague.
 ; Q: Where does Bob work?
 ; A: Bob work in SoftMegaCorp.
 
@@ -106,12 +106,13 @@
   (Concept "Unknown")
   (car outgoing-set)))
 
-(ghost-set-refractory-period .001)
+(ghost-set-refractory-period 1)
 
 ;; Ghost Rules
 (ghost-parse "
 
-p: This is your personal Notebook assistant
+# Disable gambit
+# p: This is your personal Notebook assistant
 
 r: (* [work works] in _*)
   '_0 is a great company!
