@@ -14,14 +14,12 @@
 (load-trail-3)
 (do_pln)
 
-(cog-prt-atomspace)
+; Utility for testing as sureal part is broken
+(define (get-atoms-for-sureal trail)
+ (define pln-outputs (cog-value->list
+                      (cog-value trail (Predicate "inference-results"))))
+ (if (null? pln-outputs) '() (cog-outgoing-set (filter-for-sureal pln-outputs))))
 
-;; Utility for testing as sureal part is broken
-;(define (get-atoms-for-sureal trail)
-; (define pln-outputs (cog-value->list
-;                      (cog-value trail (Predicate "inference-results"))))
-; (if (null? pln-outputs) '() (cog-outgoing-set (filter-for-sureal pln-outputs))))
-;
-;
-;(display
-; (get-atoms-for-sureal rb-trail-3))
+
+(display
+ (get-atoms-for-sureal rb-trail-3))
