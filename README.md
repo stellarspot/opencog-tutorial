@@ -11,6 +11,12 @@
 
 ```
 
+Use logger:
+```scheme
+(use-modules (opencog logger))
+(cog-logger-set-level! "debug")
+```
+
 Print all atoms in the atomspace:
 ```scheme
 (cog-prt-atomspace)
