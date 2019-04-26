@@ -2,6 +2,7 @@
  (opencog)
  (opencog nlp)
  (opencog nlp relex2logic)
+ (opencog openpsi)
  (opencog ghost)
  (opencog ghost procedures)
 
@@ -106,7 +107,6 @@
   (Concept "Unknown")
   (car outgoing-set)))
 
-(ghost-set-refractory-period 1)
 
 ;; Ghost Rules
 (ghost-parse "
@@ -115,7 +115,8 @@
 # p: This is your personal Notebook assistant
 
 r: (* [work works] in _*)
-  '_0 is a great company!
+  ['_0 is a great company!]
+  ['_0 is a fantastic company!]
   ^parse-facts()
   ^keep()
 
@@ -123,11 +124,22 @@ r: (where [do does] _* work) '_0 work in ^where-somebody-work('_0) company.
   ^keep()
 ")
 
-; Test Ghost
-(test-ghost "I work in SoftMegaCorp.")
-(test-ghost "Where do I work?")
+; Disable the ECAN related config for now
+(ghost-set-sti-weight 0)
+(ghost-af-only #f)
 
-(test-ghost "Alice works in HardMegaCorp.")
-(test-ghost "Where does Alice work?")
+(ghost-set-refractory-period .01)
+
+; Actually start Ghost
+(ghost-run)
+
+; Test Ghost
+(ghost "I work in SoftMegaCorp.")
+(ghost "Where do I work?")
+
+; Wait for the refractory period
+(sleep 1)
+(ghost "Alice works in HardMegaCorp.")
+(ghost "Where does Alice work?")
 
 ;(cog-prt-atomspace)
