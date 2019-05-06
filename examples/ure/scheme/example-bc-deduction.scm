@@ -1,6 +1,6 @@
 (use-modules (opencog) (opencog exec) (opencog rule-engine))
 
-(load "sample-deduction.scm")
+(load "example-deduction.scm")
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Knowledge Base ;;

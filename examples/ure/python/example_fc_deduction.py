@@ -9,7 +9,7 @@ atomspace = AtomSpace()
 initialize_opencog(atomspace)
 
 # Import URE Deduction Rules
-from sample_deduction import *
+from example_deduction import *
 
 # Knowledge Base
 A = ConceptNode("A")
