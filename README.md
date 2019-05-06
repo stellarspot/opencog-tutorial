@@ -399,13 +399,13 @@ Output:
 ### Simple Deduction example:
 
 * Scheme:
-  * [Rules and Config](samples/ure/scheme/example-deduction.scm)
-  * [Forward Chainer](samples/ure/scheme/example-fc-deduction.scm)
-  * [Backward Chainer](samples/ure/scheme/example-fc-deduction.scm)
+  * [Rules and Config](examples/ure/scheme/example-deduction.scm)
+  * [Forward Chainer](examples/ure/scheme/example-fc-deduction.scm)
+  * [Backward Chainer](examples/ure/scheme/example-fc-deduction.scm)
 * Python:
-  * [Rules and Config](samples/ure/python/sample_deduction.py)
-  * [Forward Chainer](samples/ure/python/sample_fc_deduction.py)
-  * [Backward Chainer](samples/ure/python/sample_bc_deduction.py)
+  * [Rules and Config](examples/ure/python/examples_deduction.py)
+  * [Forward Chainer](examples/ure/python/examples_fc_deduction.py)
+  * [Backward Chainer](examples/ure/python/examples_bc_deduction.py)
 
 
 ### Forward Chainer
@@ -636,7 +636,7 @@ Scheme file:
  (opencog exec)
  (opencog python))
 
-(python-eval "exec(open('sample_python_code.py').read())")
+(python-eval "exec(open('examples_python_code.py').read())")
 
 (display
  (cog-execute!

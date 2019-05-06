@@ -3,7 +3,7 @@
  (opencog exec)
  (opencog python))
 
-(python-eval "exec(open('sample_python_code.py').read())")
+(python-eval "exec(open('example_python_code.py').read())")
 
 (display
  (cog-execute!
