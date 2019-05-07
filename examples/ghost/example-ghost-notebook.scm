@@ -88,16 +88,13 @@
 
 (define-public (where-somebody-work who-list)
  (define who (get-first-element-from-set who-list))
- ; Workaround for passed i instead of I
- ; and alice instead of Alice
- (define who-name (string-upcase (cog-name who) 0 1))
  (define where-set
   (cog-execute!
    (Get
     (Evaluation
      (Predicate "work")
      (ListLink
-      (Concept who-name)
+      (Concept (cog-name who))
       (Variable "$where"))))))
  (Word (cog-name (get-first-element-from-set where-set))))
 
@@ -120,7 +117,7 @@ r: (* [work works] in _*)
   ^parse-facts()
   ^keep()
 
-r: (where [do does] _* work) '_0 work in ^where-somebody-work('_0) company.
+r: (where do _* work) '_0 work in ^where-somebody-work('_0) company.
   ^keep()
 ")
 
@@ -143,3 +140,6 @@ r: (where [do does] _* work) '_0 work in ^where-somebody-work('_0) company.
 (ghost "Where does Alice work?")
 
 ;(cog-prt-atomspace)
+
+(sleep 1)
+(ghost-halt)
