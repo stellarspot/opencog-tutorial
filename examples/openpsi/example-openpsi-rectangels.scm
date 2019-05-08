@@ -10,6 +10,18 @@
 (define parent-rect (Concept "rectangle"))
 (define key-cornes (Concept "key-corners"))
 
+; Rectangles are stored in Atomspace as
+;
+; (Inheritance (Concept "my-rect") parent-rect)
+;
+; (Evaluation
+;   (Predicate "id")
+;     (List
+;      (Number 123)
+;      (Concept "my-rect")))
+;
+; x1, y1, x2, y2 are stored as values with the key key-cornes
+;
 (define (add-rect id name x1 y1 x2 y2)
  (define rect (Concept name))
  (cog-set-value! rect key-cornes (FloatValue x1 y1 x2 y2))
@@ -21,6 +33,11 @@
     (Number id)
     rect))))
 
+; Mark rectangle as handled
+; (Evaluation
+;   (Predicate "handled-rect")
+;   (Concept "my-rect"))
+;
 (define (handled-rect rect)
  (Evaluation
   (Predicate "handled-rect")
