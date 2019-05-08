@@ -6,6 +6,7 @@
 ; Find the same rectangles by OpenPsi
 ; Mark iterated rectangles as handled
 
+; Utility atoms and methods
 (define parent-rect (Concept "rectangle"))
 (define key-cornes (Concept "key-corners"))
 
@@ -25,9 +26,14 @@
   (Predicate "handled-rect")
   rect))
 
+; OpenPsi components
+
+; OpenPsi Goal
 (define goal-find-the-same-rects
  (Concept "goal-find-the-same-rects"))
 
+; OpenPsi context
+; Find the same rectangles pattern
 (define context-find-the-same-rects
  (list
   (Evaluation
@@ -63,6 +69,9 @@
    (cog-value rect2 key-cornes)))
  (if rects-equals (stv 1 1) (stv 0 1)))
 
+; OpenPsi action
+; Do something with the same rectangles
+; and mark them as handled
 (define action-find-the-same-rects
  (ExecutionOutput
   (GroundedSchema "scm: find-the-same-rects")
@@ -74,6 +83,7 @@
 (define (find-the-same-rects groundings)
  (define rect1 (car (cog-outgoing-set groundings)))
  (define rect2 (cadr (cog-outgoing-set groundings)))
+ ; Do something with the same rectangles
  (display "[openpsi] find-the-same-rects\n")
  (display rect1)
  (display rect2)
@@ -82,7 +92,8 @@
   (handled-rect rect1)
   (handled-rect rect2)))
 
-
+; OpenPsi component
+; It is used to run and stop OpenPsi
 (define component-find-the-same-rects
  (psi-component "component-find-the-same-rects"))
 
@@ -94,13 +105,17 @@
   (stv 1 1)
   component-find-the-same-rects))
 
-(define delay 500000)
 
-; Add rectangles to Atomspace
-; Rectangles (rect-1, rect-3) and (rect-2, rect5) are the same
+; OpenPsi circle.
+; Run OpenPsi, add rectangles to handle by OpenPsi and stop it.
+
+(define delay 500000)
 
 ; Run OpenPsi
 (psi-run component-find-the-same-rects)
+
+; Add rectangles to Atomspace
+; Rectangles (rect-1, rect-3) and (rect-2, rect5) are the same
 
 (add-rect 1 "rect-1" 100 100 200 200)
 (add-rect 2 "rect-2" 100 100 400 400)
@@ -113,5 +128,5 @@
 (add-rect 5 "rect-5" 100 100 400 400)
 (usleep delay)
 
-; Halt OpenPsi
+; Stop OpenPsi
 (psi-halt component-find-the-same-rects)
