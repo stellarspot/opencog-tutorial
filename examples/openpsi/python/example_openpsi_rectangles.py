@@ -48,7 +48,6 @@ def find_the_same_rects(params):
 # OpenPsi components
 
 def check_the_same_rects(rect1, rect2):
-    print("[openpsi] check the same rects")
     if rect1.get_value(KEY_CORNES) == rect2.get_value(KEY_CORNES):
         return TruthValue(1.0, 1.0)
     else:
@@ -62,17 +61,14 @@ def context_find_the_same_rects():
             PredicateNode("id"),
             ListLink(
                 VariableNode("$ID_1"),
-                (VariableNode("$RECT_1")))
-        ),
+                (VariableNode("$RECT_1")))),
         InheritanceLink(
             VariableNode("$RECT_1"),
-            PARENT_RECT
-        ),
+            PARENT_RECT),
         AbsentLink(
             EvaluationLink(
                 PredicateNode("handle-rect"),
-                VariableNode("$RECT_1"))
-        ),
+                VariableNode("$RECT_1"))),
         EvaluationLink(
             PredicateNode("id"),
             ListLink(
@@ -80,24 +76,20 @@ def context_find_the_same_rects():
                 (VariableNode("$RECT_2")))),
         InheritanceLink(
             VariableNode("$RECT_2"),
-            PARENT_RECT
-        ),
+            PARENT_RECT),
         AbsentLink(
             EvaluationLink(
                 PredicateNode("handle-rect"),
-                VariableNode("$RECT_2"))
-        ),
+                VariableNode("$RECT_2"))),
         NotLink(
             EqualLink(
                 VariableNode("$RECT_1"),
                 VariableNode("$RECT_2"))),
-        # EvaluationLink(
-        #     GroundedSchemaNode("py: check_the_same_rects"),
-        #     ListLink(
-        #         VariableNode("$RECT_1"),
-        #         VariableNode("$RECT_2"))
-        # )
-    )
+        EvaluationLink(
+            GroundedPredicateNode("py: check_the_same_rects"),
+            ListLink(
+                VariableNode("$RECT_1"),
+                VariableNode("$RECT_2"))))
 
 
 # Pass OpenPsi context to Scheme
@@ -119,7 +111,6 @@ scheme_eval(atomspace,
             ; OpenPsi Goal
             (define goal-find-the-same-rects
              (Concept "goal-find-the-same-rects"))
-
 
             ; OpenPsi Action
             (define action-find-the-same-rects
@@ -146,17 +137,16 @@ scheme_eval(atomspace,
                    (Variable "$CONTEXT"))))))))
 
             ; OpenPsi rule
-                (define rule-1
-                 (psi-rule
-                  context-find-the-same-rects
-                  action-find-the-same-rects
-                  goal-find-the-same-rects
-                  (stv 1 1)
-                  component-find-the-same-rects))
+            (define rule
+             (psi-rule
+              context-find-the-same-rects
+              action-find-the-same-rects
+              goal-find-the-same-rects
+              (stv 1 1)
+              component-find-the-same-rects))
 
             ; Run OpenPsi
             (psi-run component-find-the-same-rects)
-
             ''')
 
 delay = 0.05
@@ -171,15 +161,9 @@ add_rect("4", "rect4", 200, 200, 400, 400)
 time.sleep(delay)
 add_rect("5", "rect5", 100, 100, 400, 400)
 
+time.sleep(delay)
 scheme_eval(atomspace,
             '''
-            (use-modules
-              (opencog)
-              (opencog openpsi))
-
             ; Stop OpenPsi
             (psi-halt component-find-the-same-rects)
            ''')
-
-print("The End!")
-# time.sleep(2)
