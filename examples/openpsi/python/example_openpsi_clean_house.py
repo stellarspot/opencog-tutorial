@@ -17,15 +17,14 @@ component = ConceptNode("clean-home")
 
 # Sweep Floor
 
-# Called by OpenPsi Action
 def sweep_floor(garbage_node):
-    print("sweep_floor:", garbage_node.name)
+    print("sweep floor:", garbage_node.name)
     return InheritanceLink(garbage_node, ConceptNode("done"))
 
 
-goal = ConceptNode("goal-sweep-floor")
+goal_sweep_floor = ConceptNode("goal-sweep-floor")
 
-context = [
+context_sweep_floor = [
     InheritanceLink(
         VariableNode("$GARBAGE"),
         ConceptNode("garbage")),
@@ -35,20 +34,55 @@ context = [
             ConceptNode("done")))
 ]
 
-action = ExecutionOutputLink(
+action_sweep_floor = ExecutionOutputLink(
     GroundedSchemaNode("py: sweep_floor"),
     ListLink(
         VariableNode("$GARBAGE")))
 
+openpsi.add_rule(context_sweep_floor,
+                 action_sweep_floor,
+                 goal_sweep_floor,
+                 TruthValue(1.0, 1.0),
+                 component)
+
+# Wash Dish
+
+def wash_dish(dish_node):
+    print("wash dish:", dish_node.name)
+    return InheritanceLink(dish_node, ConceptNode("done"))
+
+
+goal_wash_dish = ConceptNode("goal-wash-dish")
+
+context_wash_dish = [
+    InheritanceLink(
+        VariableNode("$DISH"),
+        ConceptNode("dish")),
+    AbsentLink(
+        InheritanceLink(
+            VariableNode("$DISH"),
+            ConceptNode("done")))
+]
+
+action_wash_dish = ExecutionOutputLink(
+    GroundedSchemaNode("py: wash_dish"),
+    ListLink(
+        VariableNode("$DISH")))
+
+openpsi.add_rule(context_wash_dish,
+                 action_wash_dish,
+                 goal_wash_dish,
+                 TruthValue(1.0, 1.0),
+                 component)
+
+# Run OpenPsi
 openpsi.init_component(component)
-
-rule = openpsi.add_rule(context, action, goal, TruthValue(1.0, 1.0), component)
-
 openpsi.run(component)
 
-# Apples are handled by OpenPsi loop
 InheritanceLink(ConceptNode("garbage-1"), ConceptNode("garbage"))
+InheritanceLink(ConceptNode("dish-1"), ConceptNode("dish"))
 InheritanceLink(ConceptNode("garbage-2"), ConceptNode("garbage"))
+InheritanceLink(ConceptNode("dish-2"), ConceptNode("dish"))
 
 delay = 0.02
 time.sleep(delay)
