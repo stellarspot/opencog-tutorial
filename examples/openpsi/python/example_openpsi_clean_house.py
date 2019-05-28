@@ -12,7 +12,7 @@ openpsi = OpenPsi(atomspace)
 
 # Clean Home
 
-component = ConceptNode("clean-home")
+component = openpsi.create_component("clean-home")
 
 
 # Sweep Floor
@@ -21,8 +21,7 @@ def sweep_floor(garbage_node):
     print("sweep floor:", garbage_node.name)
     return InheritanceLink(garbage_node, ConceptNode("done"))
 
-
-goal_sweep_floor = ConceptNode("goal-sweep-floor")
+goal_sweep_floor = openpsi.create_goal("goal-sweep-floor")
 
 context_sweep_floor = [
     InheritanceLink(
@@ -53,7 +52,7 @@ def wash_dish(dish_node):
     return InheritanceLink(dish_node, ConceptNode("done"))
 
 
-goal_wash_dish = ConceptNode("goal-wash-dish")
+goal_wash_dish = openpsi.create_goal("goal-wash-dish")
 
 context_wash_dish = [
     InheritanceLink(
@@ -93,8 +92,6 @@ def clean_house_action_selector(comp):
     else:
         return SetLink()
 
-
-openpsi.init_component(component)
 
 openpsi.set_action_selector(component, "clean_house_action_selector")
 
