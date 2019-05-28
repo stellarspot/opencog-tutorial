@@ -1,7 +1,6 @@
 import time
 from opencog.type_constructors import *
 from opencog.utilities import initialize_opencog
-from opencog.scheme_wrapper import scheme_eval
 from opencog.openpsi import *
 
 # Initialize AtomSpace
@@ -13,22 +12,6 @@ openpsi = OpenPsi(atomspace)
 
 # Clean Home
 
-current_goal = "goal-sweep-floor"
-
-
-def check_goal(goal_node):
-    global current_goal
-    if current_goal == goal_node.name:
-        return TruthValue(1.0, 1.0)
-    else:
-        return TruthValue(0.1, 0.1)
-
-
-def set_goal(goal):
-    global current_goal
-    current_goal = goal
-
-
 component = ConceptNode("clean-home")
 
 
@@ -36,8 +19,6 @@ component = ConceptNode("clean-home")
 
 def sweep_floor(garbage_node):
     print("sweep floor:", garbage_node.name)
-    global current_goal
-    set_goal("goal-wash-dish")
     return InheritanceLink(garbage_node, ConceptNode("done"))
 
 
@@ -50,10 +31,7 @@ context_sweep_floor = [
     AbsentLink(
         InheritanceLink(
             VariableNode("$GARBAGE"),
-            ConceptNode("done"))),
-    EvaluationLink(
-        GroundedPredicateNode("py: check_goal"),
-        ListLink(goal_sweep_floor))
+            ConceptNode("done")))
 ]
 
 action_sweep_floor = ExecutionOutputLink(
@@ -61,18 +39,17 @@ action_sweep_floor = ExecutionOutputLink(
     ListLink(
         VariableNode("$GARBAGE")))
 
-openpsi.add_rule(context_sweep_floor,
-                 action_sweep_floor,
-                 goal_sweep_floor,
-                 TruthValue(1.0, 1.0),
-                 component)
+rule_sweep_floor = openpsi.add_rule(context_sweep_floor,
+                                    action_sweep_floor,
+                                    goal_sweep_floor,
+                                    TruthValue(1.0, 1.0),
+                                    component)
 
 
 # Wash Dish
 
 def wash_dish(dish_node):
     print("wash dish:", dish_node.name)
-    set_goal("goal-sweep-floor")
     return InheritanceLink(dish_node, ConceptNode("done"))
 
 
@@ -85,10 +62,7 @@ context_wash_dish = [
     AbsentLink(
         InheritanceLink(
             VariableNode("$DISH"),
-            ConceptNode("done"))),
-    EvaluationLink(
-        GroundedPredicateNode("py: check_goal"),
-        ListLink(goal_wash_dish))
+            ConceptNode("done")))
 ]
 
 action_wash_dish = ExecutionOutputLink(
@@ -96,23 +70,46 @@ action_wash_dish = ExecutionOutputLink(
     ListLink(
         VariableNode("$DISH")))
 
-openpsi.add_rule(context_wash_dish,
-                 action_wash_dish,
-                 goal_wash_dish,
-                 TruthValue(1.0, 1.0),
-                 component)
+rule_wash_dish = openpsi.add_rule(context_wash_dish,
+                                  action_wash_dish,
+                                  goal_wash_dish,
+                                  TruthValue(1.0, 1.0),
+                                  component)
 
 # Run OpenPsi
+
+count = 0
+
+
+def clean_house_action_selector(comp):
+    global count
+    count = (count + 1) % 2
+
+    rules = {0: rule_sweep_floor, 1: rule_wash_dish}
+    rule = rules[count]
+    tv = rule.is_satisfiable()
+    if tv.mean >= 0.5:
+        return SetLink(rule.get_rule_atom())
+    else:
+        return SetLink()
+
+
 openpsi.init_component(component)
+
+openpsi.set_action_selector(component, "clean_house_action_selector")
+
 openpsi.run(component)
+
+delay = 0.2
 
 InheritanceLink(ConceptNode("garbage-1"), ConceptNode("garbage"))
 InheritanceLink(ConceptNode("garbage-2"), ConceptNode("garbage"))
+InheritanceLink(ConceptNode("garbage-3"), ConceptNode("garbage"))
 
 InheritanceLink(ConceptNode("dish-1"), ConceptNode("dish"))
 InheritanceLink(ConceptNode("dish-2"), ConceptNode("dish"))
+InheritanceLink(ConceptNode("dish-3"), ConceptNode("dish"))
 
-delay = 0.2
 time.sleep(delay)
 
 openpsi.halt(component)
