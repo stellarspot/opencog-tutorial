@@ -204,6 +204,30 @@ Output:
 )
 ```
 
+## DeleteLink
+
+Removes atoms from the AtomSpace.
+
+Python:
+```python
+ConceptNode("node-1")
+ConceptNode("node-2")
+print("nodes in atomspace:", atomspace.size())
+
+DeleteLink(ConceptNode("node-1"))
+print("nodes in atomspace:", atomspace.size())
+
+DeleteLink(ConceptNode("node-2"))
+print("nodes in atomspace:", atomspace.size())
+```
+
+Output:
+```scheme
+nodes in atomspace: 2
+nodes in atomspace: 1
+nodes in atomspace: 0
+```
+
 ### ExecutionOutputLink
 
 Python:
