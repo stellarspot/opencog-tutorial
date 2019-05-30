@@ -208,6 +208,48 @@ Output:
 
 Removes atoms from the AtomSpace.
 
+Scheme:
+```scheme
+(use-modules (opencog) (opencog exec))
+
+(Inheritance
+ (Concept "apple-1")
+ (Concept "apple"))
+
+(Inheritance
+ (Concept "apple-2")
+ (Concept "apple"))
+
+(define (get-apples)
+ (cog-execute!
+  (Get
+   (Inheritance
+    (Variable "$APPLE")
+    (Concept "apple")))))
+
+(display (get-apples))
+
+(Delete
+ (Inheritance
+  (Concept "apple-1")
+  (Concept "apple")))
+
+(display (get-apples))
+
+```
+
+Output:
+```scheme
+(SetLink
+   (ConceptNode "apple-1")
+   (ConceptNode "apple-2")
+)
+(SetLink
+   (ConceptNode "apple-2")
+)
+```
+
+
 Python:
 ```python
 ConceptNode("node-1")
