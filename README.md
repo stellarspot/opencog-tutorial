@@ -703,6 +703,37 @@ r: (legs does _~animal have)
 ;[Ghost] (lion has 4 legs)
 ```
 
+## CogUtil methods:
+
+### cog-chase-link
+
+```scheme
+(EvaluationLink
+ (PredicateNode "red")
+ (ConceptNode "ball-1"))
+
+(EvaluationLink
+ (PredicateNode "big")
+ (ConceptNode "ball-1"))
+
+(EvaluationLink
+ (PredicateNode "green")
+ (ConceptNode "ball-2"))
+
+(EvaluationLink
+ (PredicateNode "small")
+ (ConceptNode "ball-2"))
+
+(display
+ (cog-chase-link 'EvaluationLink 'PredicateNode (ConceptNode "ball-2")))
+```
+
+Output:
+```scheme
+((PredicateNode "green")
+ (PredicateNode "small"))
+```
+
 ## Scheme Python Interoperability
 
 ### Call Python from Scheme
